@@ -1,0 +1,42 @@
+<template>
+    <lightning-card title="Liste des comptes" icon-name="custom:custom67">
+        <div class="slds-grid slds-gutters slds-var-p-left_medium slds-grid_vertical-align-end">
+            <div class="slds-col slds-size_1-of-12">
+                <lightning-combobox
+                    name="recordsInPage"
+                    label="Nb lignes :"
+                    value={recordsInPageText}
+                    placeholder=""
+                    options={options}
+                    onchange={handleFiltres} ></lightning-combobox>
+            </div>
+            <div class="slds-col slds-size_1-of-6">
+                <lightning-input type="text" placeholder="valeur recherchée ..." label="Recherche : "
+                    value={searchvalue}
+                    name="search" onchange={handleFiltres}>
+                </lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-12">
+                <lightning-button-icon icon-name="utility:refresh" name="refresh" variant="brand" alternative-text="refresh" disabled={disableRefresh} onclick={handleFiltres}></lightning-button-icon>
+            </div>
+        </div>
+        <div class="slds-var-p-top_x-small">
+            <lightning-datatable key-field="Id" data={records} columns={columns} sorted-by={sortBy}
+                sorted-direction={sortDirection} onsort={handleSortdata} onrowselection={enableButton}>
+            </lightning-datatable>
+            <div if:true={spinner} class="slds-spinner_inline spinner-padding slds-var-p-around_large slds-var-m-top_large">
+                <lightning-spinner variant="brand" alternative-text="Loading Cases" size="medium">
+                </lightning-spinner>
+            </div>
+        </div>
+        <div class="slds-var-p-top_medium slds-text-align_center">
+            <lightning-button variant="base" class="slds-var-m-right_small" icon-name="utility:back" name="previous"
+                onclick={handelPrevious}></lightning-button>
+            <span class="slds-badge slds-badge_lightest ">
+                Page {currentPage} {outOf} {numberOfPages}
+            </span>
+            <lightning-button variant="base" class="slds-var-m-left_medium" icon-name="utility:forward" name="forward"
+                onclick={handelForward}></lightning-button>
+        </div>
+    </lightning-card>
+</template>
